@@ -1,6 +1,14 @@
 #!/usr/bin/python
 
 import musicbrainzngs
+import argparse
+import sys
+
+parser = argparse.ArgumentParser(description='Audit Music collection')
+parser.add_argument('-a','--artist', help='Artist Name', required=True)
+parser.add_argument('-t','--title', help='Album Title', required=True)
+args = parser.parse_args()
+
 
 musicbrainzngs.set_useragent(
     "auditmusic musicbrainz query",
@@ -8,20 +16,17 @@ musicbrainzngs.set_useragent(
     "https://github.com/luckyleftie/auditmusic/",
 )
 
+# Add getopts thing. So you can run it like this
+# querymusicbrainz.py -a <ARTIST> -t <ALBUM TITLE>
 
-#album_id="45562d89-0c2a-481d-a367-9977891e32bd"
-result = musicbrainzngs.search_releases(artist='Ray Cash', release='Cash on Delivery')
-#album = musicbrainzngs.get_release_by_id(album_id,includes=['artists'])
-print result, "\n"
-#print album['release']
+result = musicbrainzngs.search_releases(artist=args.artist, release=args.title)
 for item in result['release-list']:
-    print item, "\n"
-    #if (item['artist-credit'][0]['artist']['name'] == "French Montana" and item['release-group']['type'] == "Album"):
-        #print item['artist-credit'][0]['artist']['name'],"-",item['title'],"-",item['id']
-    #    actual = musicbrainzngs.get_release_by_id(item['id'],includes=['media'])
-    #    print actual
-        
-#    print item['release-list'][0]['title'], "\n\n"
+    if (item['artist-credit'][0]['artist']['name'] == args.artist and item['title'] == args.title):
+        actual = item['id']
+        foo = musicbrainzngs.get_release_by_id(actual,includes=['recordings','release-groups'])
+        #print foo
+print "Positions: ",foo['release']['medium-list'][0]['track-list'][-1]['position'], "Tracks: ",foo['release']['medium-list'][0]['track-list'][-1]['number']
 
-#print(u"{id}: {name}".format(id=artist['id'], name=artist["name"]))
+
+
 # vim:ts=4:expandtab:
