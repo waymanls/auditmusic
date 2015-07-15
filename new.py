@@ -23,7 +23,7 @@ for dirName,subdirList,fileList in os.walk(args.directory):
     else:
         try:
             # Separate out Artist Name from Album Title
-            em = re.search(r'/(music|MUSIC)/(.*)_-_(.*)/?',dirName)
+            em = re.search(r'^.*/(music|MUSIC|Music)/(.*)_-_(.*)/?',dirName)
             # Prune off extra "/". if group 2 contains a "/" character, don't print
             if re.search(r'/',em.group(2)):
                 pass

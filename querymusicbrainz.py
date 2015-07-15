@@ -24,8 +24,8 @@ for item in result['release-list']:
     if (item['artist-credit'][0]['artist']['name'] == args.artist and item['title'] == args.title):
         actual = item['id']
         foo = musicbrainzngs.get_release_by_id(actual,includes=['recordings','release-groups'])
-        #print foo
-print "Positions: ",foo['release']['medium-list'][0]['track-list'][-1]['position'], "Tracks: ",foo['release']['medium-list'][0]['track-list'][-1]['number']
+        print foo
+#print "Positions: ",foo['release']['medium-list'][0]['track-list'][-1]['position'], "Tracks: ",foo['release']['medium-list'][0]['track-list'][-1]['number']
 
 
 
