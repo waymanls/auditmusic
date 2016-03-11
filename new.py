@@ -23,9 +23,23 @@ def main():
     x = 0
     L = []
     badalbums = []
+    extensions = ('mp3','mp4','wav','ogg','flac','aac')
 
+    FULLDIR = args.directory.split("/")
     for dirName,subdirList,fileList in os.walk(args.directory):
-        #Prune bad directories from list
+        if fileList:
+            for files in fileList:
+                for ext in extensions:
+                    if files.endswith(ext):
+                         print type(ext)
+                        
+            print "we've got {} files in {}".format(len(fileList), dirName)
+            for z in os.path.abspath(dirName).split("/"):
+                if re.search(r'_-_',z):
+                    artist,title = z.split('_-_')
+        else:
+            print ""
+"""
         if re.search(r'([Ss]ingles|lost\+found|System\ Volume\ Information|.*RECYCLE?)',dirName):
             pass
         else:
@@ -36,7 +50,6 @@ def main():
                 if re.search(r'/',em.group(2)):
                     pass
                 else:
-                    #print em.group(1) ,"~~~", em.group(2)
                     for fname in fileList:
                         # Get actual music files, not other files
                         if re.search(r'\.(flac$|wav$|mp3$|m4a$|mp4$|wma$)',fname):
@@ -64,6 +77,7 @@ def main():
             except AttributeError:
                 print "Cannot parse ", dirName
                 badalbums.append(dirName)
+"""
 
 if __name__ == "__main__":
     main()
