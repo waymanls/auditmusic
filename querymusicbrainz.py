@@ -23,7 +23,8 @@ actual = []
 def gather(artist,title):
     result = musicbrainzngs.search_releases(artist=artist, release=title)
     for item in result['release-list']:
-        #print json.dumps(item,sort_keys=True,indent=4, separators=(',', ': '))
+        print artist,title
+        print json.dumps(item,sort_keys=True,indent=4, separators=(',', ': '))
         if (re.search(artist, item['artist-credit'][0]['artist']['name'],flags=re.IGNORECASE) and re.search(artist, item['artist-credit-phrase'],flags=re.IGNORECASE) and re.search(title, item['title'],flags=re.IGNORECASE) and re.search('Album', item['release-group']['primary-type'])):
         #if (item['artist-credit'][0]['artist']['name'] == artist and item['title'] == title):
             actual.append(item['id'])
