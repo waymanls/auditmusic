@@ -37,6 +37,8 @@ def main():
             for z in os.path.abspath(dirName).split("/"):
                 if re.search(r'_-_',z):
                     artist,title = z.split('_-_')
+                    artist = artist.replace('_',' ')
+                    querymusicbrainz.gather(artist,title)
         else:
             print ""
 """
