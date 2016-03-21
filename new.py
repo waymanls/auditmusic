@@ -38,7 +38,13 @@ def main():
                 if re.search(r'_-_',z):
                     artist,title = z.split('_-_')
                     artist = artist.replace('_',' ')
-                    querymusicbrainz.gather(artist,title)
+                    foundtracks = querymusicbrainz.gather(artist,title)
+                    if len(fileList) != foundtracks:
+                        print bcolors.FAIL + "You're missing some tracks bro!" + bcolors.ENDC
+                        print "We have {}, They have {}".format(len(fileList),foundtracks)
+                    else:
+                        print bcolors.OKGREEN + "We've got a MATCH" + bcolors.ENDC
+                        print fileList
         else:
             print ""
 """
