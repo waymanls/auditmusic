@@ -32,19 +32,20 @@ def main():
                 for ext in extensions:
                     if files.endswith(ext):
                          print type(ext)
+                         x=x+1
                         
-            print "we've got {} files in {}".format(len(fileList), dirName)
+            print "we've got {} files in {}".format(x, dirName)
             for z in os.path.abspath(dirName).split("/"):
                 if re.search(r'_-_',z):
                     artist,title = z.split('_-_')
-                    artist = artist.replace('_',' ')
-                    foundtracks = querymusicbrainz.gather(artist,title)
-                    if len(fileList) != foundtracks:
-                        print bcolors.FAIL + "You're missing some tracks bro!" + bcolors.ENDC
-                        print "We have {}, They have {}".format(len(fileList),foundtracks)
-                    else:
-                        print bcolors.OKGREEN + "We've got a MATCH" + bcolors.ENDC
-                        print fileList
+                    artist= re.sub(r"_",' ', artist)
+                    title = re.sub(r"_",' ', title)
+                    foundtracks = querymusicbrainz.gather(artist,title,x)
+            if int(x) != int(foundtracks):
+                print bcolors.FAIL + "songs in ", dirName, ": " + bcolors.ENDC, x
+                print bcolors.WARNING + "in MusicBrainz : " + bcolors.ENDC, foundtracks
+            else:
+                print bcolors.OKGREEN + "You've found a MATCH!" + bcolors.ENDC
         else:
             print ""
 """
